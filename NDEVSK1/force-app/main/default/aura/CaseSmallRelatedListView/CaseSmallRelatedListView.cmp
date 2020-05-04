@@ -1,0 +1,122 @@
+<!--Lightning component name:CaseSmallRelatedListView
+Created by:Prathyusha
+Created Date:28/2/2018
+Purpose:component built to show case related list on the under when clicked on account tab
+Status:In Progress-->
+<aura:component controller="CaseTriggerHelper"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <!-- Aura Attributes-->
+    <aura:attribute name="extobj" type="object" /> 
+    <aura:attribute name="flag" type="boolean" default="False" /> 
+    <aura:attribute name="count" type="string" default="0"/>
+    <aura:attribute name="countlessone" type="string" default="0"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="Id" type="String" />
+    <aura:attribute name="loading" type="Boolean" default="false" 
+                    description="Indicates if there are some laoding actions so that a spinner would be displayed"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- loading spinner -->
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner variant="brand" size="large" alternativeText="Loading" />
+    </aura:if>
+    
+    <div class="slds-border_left slds-border_right slds-border_top border-style" >
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate slds-p-left_medium">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+                            <lightning:icon iconName="standard:entity" size="small" alternativeText="Indicates approval"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2>
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[Cases]">
+                                <aura:if isTrue="{!lessthan(v.count,1)}">
+                                    <div class="slds-text-heading_small TextColor-inherit"><a class="slds-card__header-link baseCard__header-title-container" onclick="{!c.showFilt}">{!$Label.c.Aura_Cases}({!v.count}) </a></div>
+                                </aura:if>
+                                <aura:if isTrue="{!greaterthan(v.count,0)}">
+                                    <aura:if isTrue="{!lessthan(v.count,6)}">
+                                        <div class="slds-text-heading_small TextColor-inherit"><a class="slds-card__header-link baseCard__header-title-container" onclick="{!c.showFilt}">{!$Label.c.Aura_Cases}({!v.count}) </a></div>
+                                    </aura:if>
+                                </aura:if>
+                                <aura:if isTrue="{!greaterthan(v.count,5)}">
+                                    <div class="slds-text-heading_small TextColor-inherit"><a class="slds-card__header-link baseCard__header-title-container" onclick="{!c.showFilt}">{!$Label.c.Aura_Cases}({!v.countlessone}+) </a></div>
+                                </aura:if>
+                            </a>
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-no-flex slds-p-right_medium">
+                    <aura:if isTrue="{!v.flag}"> <button class="slds-button slds-button_neutral" onclick="{!c.createCase}">{!$Label.c.Aura_New}</button> </aura:if>
+                </div>
+            </div >
+            <div class="slds-card__body" > 
+                <aura:if isTrue="{!greaterthan(v.count,0)}">
+                    <div class="slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer " style="overflow: scroll;">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Case Number">{!$Label.c.Aura_Case_Number}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Case Record Type">{!$Label.c.Aura_Case_Record_Type}</div>
+                                </th>
+                                <!--<th scope="col">
+                                    <div class="slds-truncate" title="Parent Case Number">{!$Label.c.Aura_Parent_Case_Number}</div>
+                                </th>-->
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Date/Time Opened">{!$Label.c.Aura_DATE_TIME_OPENED}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Status">{!$Label.c.Aura_Status}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Priority">{!$Label.c.Aura_Priority}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Case Sub-Type">CASE SUB-TYPE</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Case Subject">CASE SUBJECT</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.extobj}" var="obj">
+                                <tr class="slds-hint-parent">
+                                    <th scope="row">
+                                        <div class="slds-truncate" title="Case Number"  ><a onclick="{!c.gotoCase}" id='{!obj.Id}' >{!obj.CaseNumber} </a></div>
+                                    </th>
+                                    <td>
+                                        <div class="slds-truncate" title="Case Record Type">{!obj.RecordType.Name}</div>
+                                    </td>
+                                    <!--<td>
+                                        <div class="slds-truncate" title="Parent Case Number"><a onclick="{!c.gotoCase}" id='{!obj.Id}' >{!obj.Parent.CaseNumber}</a></div>
+                                    </td>-->
+                                    <td>
+                                        <!--<div class="slds-truncate" title="Date/Time Opened"><ui:outputDateTime value="{!obj.CreatedDate}" format="dd-MM-yyyy  HH:mm"/></div>-->
+                                        <lightning:formattedDateTime value="{!obj.CreatedDate}" />
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Status">{!obj.Status}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Priority">{!obj.Priority}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Case Sub-Type">{!obj.Case_Sub_Type__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Case Subject">{!obj.Case_Subject__c}</div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </div>
+                    <div class="slds-p-around_small slds-text-align_center" > <a onclick="{!c.showFilt}">{!$Label.c.Aura_View_All}</a></div>
+                </aura:if>    
+            </div>
+        </article>  
+    </div>
+</aura:component>

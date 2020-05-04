@@ -1,0 +1,70 @@
+<aura:component controller="ActiveCCR" implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="contactRows" type="Object[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-box slds-theme_default">
+        <lightning:tile>
+        <table>
+            <thead>
+                <tr>
+                <th>
+        <div>
+            <p>
+              <lightning:icon iconName="standard:groups"/>
+              <b class="black"> Active Contract Contact Relationships </b>
+            </p>
+            <br/>
+        </div>
+   </th>
+  </tr>
+  </thead>
+       <tbody>
+           <tr>
+               <td>
+        <div>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout:fixed;">
+          <thead>
+                <tr class="slds-line-height_reset">
+                  <th class="" scope="col">
+                    <div title="CCR Name">CCR Name</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Contract Name">CONTRACT NAME</div>
+                  </th>                    
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Contract Number">CONTRACT NUMBER</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Current Site Indicator">CURRENT SITE INDICATOR</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Roles">ROLES</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Owner Percentage">OWNER PERCENTAGE</div>
+                  </th>
+                    
+                 </tr>
+    	   </thead>
+                    <tbody>
+                        <aura:iteration var="cell" items="{!v.contactRows}">
+                            <tr>
+ 	                            <td class="Cfont"> <a href="{! '/'+cell.Id}"> {!cell.Name} </a> </td>
+                                <td class="Cfont"> <a href="{! '/'+cell.Contract__c}"> {!cell.Contract__r.Name} </a> </td>
+                                <td class="Cfont"> <a href="{! '/'+cell.Contract__c}"> {!cell.Contract__r.ContractNumber} </a> </td>                                
+                                <td class="BreakWord"> {!cell.Contract__r.Current_Site_Indicator__c}  </td>
+                                <td class="Cfont"> {!cell.Roles__c}  </td> 
+                                <td> {!cell.Owner_Percentage__c}  </td>                                 
+
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+            </table>
+          </div>
+               </td>
+           </tr>
+           </tbody>         
+               </table>
+</lightning:tile>
+</div>
+</aura:component>

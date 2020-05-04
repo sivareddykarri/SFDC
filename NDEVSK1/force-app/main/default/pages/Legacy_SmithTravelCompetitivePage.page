@@ -1,0 +1,23 @@
+<apex:page standardController="Account" showHeader="false" setup="false" extensions="Legacy_Ext_SmithTravel">
+<style type="text/css">
+.odd { 
+background-color: White;}
+.even
+{background-color: Lightgray;}
+.headerStyle{color:black;font-weight: bold; background-color:#aaaaff}
+</style>
+<apex:form >
+<apex:pageBlock >
+<div style="overflow:auto;height:350px;">
+<apex:pagemessages ></apex:pagemessages>
+<apex:pageBlockTable value="{!events}" var="c" rowClasses="even,odd" headerClass="headerStyle" cellspacing="1px" cellpadding="1" dir="LTR" rendered="{!NOT(ISNULL(events))}"  >
+<apex:column headerValue="Year"   value="{!c.Name__c}" dir="RTL" headerClass="headerStyle" style="{!if(c.Name__c=='Average','color:black;font-weight: bold; background-color:#aaaacc', 'color:black')}"/>
+<apex:column headerValue="Month" value="{!c.STR_Month_c__c}" dir="RTL" headerClass="headerStyle" style="{!if(c.Name__c=='Average','color:black;font-weight: bold; background-color:#aaaacc', 'color:black')}"/>
+<apex:column headerValue="RevPAR Comp Index" dir="RTL" headerClass="headerStyle" value="{!c.STR_RevPAR_Comp_Index_c__c}"  style="{!if(c.Name__c=='Average','color:black;font-weight: bold; background-color:#aaaacc', 'color:black')}"/>
+<apex:column headerValue="ADR Comp Index" value="{!c.STR_Comp_ADR_Index_c__c}"  dir="RTL" headerClass="headerStyle" style="{!if(c.Name__c=='Average','color:black;font-weight: bold; background-color:#aaaacc', 'color:black')}"/>
+<apex:column headerValue="Occ Comp Index" value="{!c.STR_Comp_Occ_Index_c__c}" dir="RTL" headerClass="headerStyle" style="{!if(c.Name__c=='Average','color:black;font-weight: bold; background-color:#aaaacc', 'color:black')}"/>
+</apex:pageBlockTable>
+</div>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

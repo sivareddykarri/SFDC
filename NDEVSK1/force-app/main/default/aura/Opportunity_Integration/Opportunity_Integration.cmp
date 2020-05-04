@@ -1,0 +1,18 @@
+<aura:component controller="OpportunityTriggerHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!-- Aura Attribute -->
+    <aura:attribute name="showSpinner" type="boolean" />
+    <!-- Aura Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <!-- Aura Body-->
+    <div style="padding:1rem;">
+        <p><lightning:formattedText value="This request will send Opportunity and/or PIP creation/update to Legacy Salesforce. Click Submit to confirm submission."/></p>
+        <div class="slds-p-top_medium">
+            <lightning:button variant="brand" label="Submit" title="Brand action" onclick="{!c.sendToLegacyRequest}" />
+        </div>
+        <!-- Show Spinner-->
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+    </div>
+</aura:component>

@@ -1,0 +1,273 @@
+<apex:page controller="WebToCaseHandler" showHeader="false" sidebar="false" standardStylesheets="false" doctype="html-5.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+<div class="container-fluid">
+<!--<body onload="self.scrollTo(0,0)"/>-->
+
+<apex:pageMessages /></div>
+
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #7d7d7d
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    color: #003866;
+    font-size: 30px;
+}
+
+h2 {
+    color: #333333;
+    font-size: 20px;
+}
+
+.help-icon {
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+}
+
+.star-icon,
+.assistiveText,.errorMsg {
+    /*color: #d44950;*/
+    color: red;
+}
+
+.submit {
+    background-color: #c3a30b;
+    background-color: #c3a30b !important;
+    border-radius: 0 !important;
+}
+
+.submission-form .form-control {
+    border-radius: 0 !important;
+}
+
+p,
+span {
+    color: #7d7d7d;
+    font-size: 14px;
+}
+
+.pdf-text {
+    color: #333333;
+    font-size: 18px;
+}
+
+label {
+width: 138px;
+word-wrap: break-word;
+color: #7d7d7d;
+font-size: 14px;
+font-weight: normal;
+padding-right: 36px !important;
+} 
+.RequestTypedetail {
+MARGIN-RIGHT: -28px;
+ }
+.RequestType {
+PADDING-LEFT: 10px;
+ }
+
+.form-control {
+    width: auto;
+    border-radius: 0 !important;
+}
+
+select {
+    width: 196px !important;
+    margin-right:30px !important; 
+    
+}
+
+textarea.form-control {
+    height: 100px;
+    width: 557.1px;
+}
+
+a {
+    color: #0072cf;
+    text-decoration: none;
+}
+
+ul {
+    padding-left: 16px;
+}
+.indicates-text{
+    margin-top: 36px;
+}
+.confirmM3{
+    color: #3c763d;
+background-color: #dff0d8;
+border-color: #d6e9c6;
+padding: 10px;
+margin-top: 5px;
+border: 1px solid transparent;
+border-radius: 4px;
+}
+.confirmM3 h4{
+color: #3c763d;
+font-weight: 700;
+}
+.errorM3{
+color: #a94442;
+background-color: #f2dede;
+border-color: #ebccd1;
+padding: 10px;
+margin-top: 5px;
+border: 1px solid transparent;
+border-radius: 4px;
+}
+.errorM3 h4{
+margin-top: 0px;
+margin-bottom: 0px;
+}
+.warningM3{
+color: #a94442;
+background-color: #DCDCDC;
+border-color: #ebccd1;
+padding: 10px;
+margin-top: 5px;
+border: 1px solid transparent;
+border-radius: 4px;
+}
+.warningM3 h4{
+margin-top: 0px;
+margin-bottom: 0px;
+}
+</style>
+<div class="container-fluid">
+<apex:form id="frm">
+    <table style="width:100%"> 
+      <tr>
+      
+        <td width="65%">    
+           <h1 class="form-group" style=" margin-top: 0;">MyRequest</h1>     
+            <b>How MyRequest Works</b>   <br/>
+            <p> 
+            MyRequest provides an efficient, effective, and streamlined method for submitting, processing, and tracking content and rate plan requests, as well as requesting assistance in researching third party issues such as rate parity.</p>
+            
+            <p><span>*</span>To add or modify rate plans, room types, or OTA blackout dates, please download the appropriate PDF document provided on this page. You need to fill out the form, save it, and attach it to the request below before submitting.
+            </p>                                
+                           <p> <b>Step 1:</b> Fill in the required fields(<span>*</span>) on the form below, including your your first, last name, email address, and 5-digit Site ID #.</p>
+                           <p> <b>Step 2:</b> Select the Request Type (content, rate plan, room type etc...).</p>  
+                           <ul>
+                            <li> 
+                               <p> If applicable, use the <b>second dropdown</b> menu to give further request details.</p>
+                            </li>
+                           </ul>                
+                            
+                           <p> <b>Step 3:</b> Type in your question or comment related to this request. Please be as descriptive as possible so we may assist you as quickly as possible.</p>
+                           <p> <b>Step 4:</b> Attach the PDF form or hotel images (if applicable).</p>
+                            <p><b>Step 5:</b> Click Submit.You will receive a confirmation message with a ticket# to your email address. You can review the status of your request any time by using Live Chat  function located at the top of MyPortal.</p>                                
+        </td>
+        
+        <td width="10%"></td>
+        
+        <td width="25%" style="padding-bottom: 149px;">
+            <h4><b>PDF Document Downloads <br/></b></h4>
+            <!--<apex:outputLink value="/sfc/servlet.shepherd/version/download/{!$Label.ContentDoc1}">333</apex:outputLink> <br/> -->
+            
+            <apex:repeat var="att"   value="{!attach}">     
+            <ul>
+            <li>                       
+            <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!att.Id}">{!att.Title}</apex:outputLink> <br/> 
+                </li> 
+            </ul>                         
+            </apex:repeat>
+                                         
+        </td>
+      
+      </tr>  
+    </table>
+   
+  
+   
+   <div class="row form-group">
+        <div class="col-xs-12">
+        
+            <span class="pull-left indicates-text">
+                <h2 class="form-group">Submit Request</h2>
+                <span class="star-icon">*</span> Indicates a required field</span>
+        </div>
+    </div>
+   
+       <apex:pageBlock id="PB1">               
+            <apex:outputText value="{!Myportal}"/>
+            <apex:pageBlockSection columns="2" id="PBS1">              
+                <apex:inputField id="FName" value="{!CaseToInsert.Contact_First_Name__c}" html-placeholder="First Name" label="First Name "  style="margin-right:30px" styleclass="form-control form-group" required="true"/>
+                <apex:inputField id="LName" value="{!CaseToInsert.Contact_Last_Name__c}" html-placeholder="Last Name" label="Last Name "  styleclass="form-control form-group" required="true"/>
+                 <apex:inputField id="Email" value="{!CaseToInsert.Contact_Email__c}" type="email" html-placeholder="email@domain.com" label="Contact Email Address " styleclass="form-control form-group"  required="true"/>                     
+                <apex:inputField id="Site" value="{!CaseToInsert.Account_Name__c}" html-placeholder="#####" label="Site # " styleclass="form-control form-group"  required="true" />
+                 <apex:inputField value="{!CaseToInsert.Contact_Phone__c}" html-placeholder="#####" label="Contact Phone Number " styleclass="form-control form-group" required="true"/>   
+                  <div></div>
+               
+            </apex:pageBlockSection> 
+           
+                
+           <apex:pageBlockSection columns="1">
+              
+           </apex:pageBlockSection>
+
+               
+                <apex:pageBlockSection columns="3" id="PBS3">
+                
+                    <apex:inputField value="{!CaseToInsert.Request_Type__c}" label="Request Type " styleclass="form-control form-group RequestType"  required="true"/>
+                    
+                    <apex:inputField value="{!CaseToInsert.Request_Type_detail__c}" label="Request Type Details" styleclass="form-control form-group RequestTypedetail" required="true"/> 
+                    
+                    
+                     
+                </apex:pageBlockSection>  
+                
+         
+                <apex:pageBlockSection columns="2" >
+                    <apex:inputField value="{!CaseToInsert.Description}" label="Please type your question or comment " styleclass="form-control form-group"  required="true"/>
+                </apex:pageBlockSection>
+               
+                    <br/><br/>
+                 <p class="pdf-text">
+                    Attach Completed PDF Form and hotel images (if applicable)</p><br/>  
+                
+            
+                <apex:pageBlockSection columns="2"> 
+                    
+                    <apex:repeat value="{!CaseAttachment}" var="AFL">                       
+                        <apex:inputFile value="{!AFL.body}" filename="{!AFL.name}"/><br/>                            
+                    </apex:repeat>
+                    <span class="star-icon">“ <b>Note about attachments:</b> The total size of your attachments cannot exceed 10MB. If your attachments exceed 10MB in total, the request will go through but the files will not get attached to the initial request. You will be notified upon “Submit” if the total attachments exceed 10 MB. You will be able to send attachments under 18 MB by replying to the email you receive with your case number.””</span>
+                </apex:pageBlockSection> <br/>
+             <c:reCaptcha /><br/><br/> 
+             <apex:pageMessages /><br/> 
+           <div class="form-row">
+        <div class="col-xs-12 col-md-9 text-center form-group">
+            <apex:commandButton action="{!webToCaseMethod}" value="SUBMIT REQUEST" styleClass="btn btn-default submit" onclick="return callValidation();" id="btnTest"/>
+        </div>
+    </div>
+
+        </apex:pageBlock>
+  <br/> <br/> <br/>
+
+   <script type="text/javascript" styleclass ="btn btn-default submit">
+   document.getElementById("{!$Component.PB1.PBS1.FName}").value='{!$CurrentPage.parameters.FNAME}';
+   document.getElementById("{!$Component.PB1.PBS1.LName}").value='{!$CurrentPage.parameters.LNAME}';
+   document.getElementById("{!$Component.PB1.PBS1.Email}").value='{!$CurrentPage.parameters.EMAIL}';
+   document.getElementById("{!$Component.PB1.PBS1.Site}").value='{!$CurrentPage.parameters.SITE}';
+
+    function callValidation(){  
+        if(grecaptcha.getResponse().length == 0){
+           alert('Please click the reCAPTCHA checkbox');
+           return false;
+        }else{
+            window.scrollTo(0, 0);
+        }
+    }
+    
+    </script>
+    
+</apex:form> 
+
+</div>
+</apex:page>

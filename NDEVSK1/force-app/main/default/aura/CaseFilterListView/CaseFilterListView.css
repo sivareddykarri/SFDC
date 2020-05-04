@@ -1,0 +1,28 @@
+.THIS.border-style {
+    border-radius:4px;
+}
+.THIS tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+ .THIS tfoot {
+    display: table-header-group;
+    }
+.THIS thead{
+    padding-left: 9px;
+}
+.THIS table.dataTable tfoot th{
+      padding-left: 9px;
+}
+
+.THIS table.dataTable tfoot td{
+    padding-left: 9px;
+}
+.THIS table.dataTable thead th{
+    padding-left: 9px;
+}
+.THIS table.dataTable thead td{
+    padding-left: 9px;
+}

@@ -1,0 +1,19 @@
+<apex:component >
+ <html>
+  <head>
+    
+     <script src='https://www.google.com/recaptcha/api.js'></script>
+     
+  </head>
+  <body>
+    <form action="?" method="POST">
+    
+        <div class="g-recaptcha" data-sitekey="{!$Setup.Service_Configuration_Settings__c.Captcha_Site_Key__c}"></div>
+         
+      <br/>
+    
+
+    </form>
+  </body>
+</html>
+</apex:component>

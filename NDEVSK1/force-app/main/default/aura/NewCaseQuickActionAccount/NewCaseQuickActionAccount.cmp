@@ -1,0 +1,37 @@
+<!--
+**
+ @Author :     Prathyusha
+ @Name	 :     NewCaseQuickcActionAccount
+ @Created Date: FEb/15/2018
+ @Description: Used on the Account site layout on NEW Case Quick action.
+ @Version:0.2
+ @Reference: 
+-->
+<aura:component controller="CaseTriggerHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:attribute name="lstofrecordtype" type="String[]"/>
+    <aura:attribute name="sobjectname" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="acountId" type="Id"/>
+    <aura:attribute name="Isconsole" type="boolean" default='false'/> 
+    <aura:handler name="init" value="{!this}" action="{!c.getRecType}"/>
+   
+    <aura:attribute name="accobj" type="Account" default="{ 'sobjectType': 'Account',
+                                                          'RecordTypeId': ''}"/>
+     <lightning:workspaceAPI aura:id="workspace" />
+    <div class="slds-absolute-center">
+        <div>
+            <ui:inputSelect aura:id="fetchRecordType" class="slds-select" label="Select Record Type" value="{!v.accobj.RecordTypeId}"/> 
+        </div>&nbsp; &nbsp;
+    </div>
+    <div class="button-height"> 
+        <div>
+            <br/>
+            <br/>
+        </div>   
+        <div class="slds-text-align_right">
+            <button type="button" class="slds-button slds-button_brand" onclick="{!c.createRec}">{!$Label.c.Aura_New}</button>
+            <button type="button" class="slds-button slds-button_brand" onclick="{!c.cancelTab}">{!$Label.c.Aura_Cancel}</button>
+        </div>
+    </div>
+</aura:component>

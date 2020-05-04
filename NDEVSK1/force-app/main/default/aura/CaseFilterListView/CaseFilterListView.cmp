@@ -1,0 +1,157 @@
+<aura:component controller="CaseTriggerHelper"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="extobj" type="object" /> 
+    <aura:attribute name="count" type="String" default="0"/>
+    <aura:attribute name="Id" type="String" />
+    <aura:attribute name="CaseId" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+     
+  <!--create a component attributs -->
+    <aura:attribute name="Spinner" type="boolean" default="true"/>
+    <ltng:require styles="{!$Resource.JqueryDatatableCss}"  scripts="{!join(',',$Resource.Jquery_V3, 
+                                                                     $Resource.JqueryDatatableJs1,
+                                                                     $Resource.JqueryDatatableJs
+                                                                     )}"  afterScriptsLoaded="{!c.jsLoaded}"  />
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <!-- loading Spinner-->
+        
+<aura:if isTrue="{!v.Spinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+       <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+         <span class="slds-assistive-text">Loading</span>
+         <div class="slds-spinner__dot-a"></div>
+         <div class="slds-spinner__dot-b"></div>
+       </div>
+    </div>
+ </aura:if>    
+    <div class="slds-border_left slds-border_right slds-border_top border-style">
+        <article class="slds-card " >
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate slds-p-left_medium">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+                            <lightning:icon iconName="standard:entity" size="small" alternativeText="Indicates approval"/></span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2>
+                            <div title="[Cases]">
+                                <span class="slds-text-heading_small">{!$Label.c.Aura_Cases}({!v.count})</span>
+                            </div>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body">
+                <table class="display slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer" id='sampleTable' style="overflow: scroll; word-wrap: break-word;">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Number">{!$Label.c.Aura_Case_Number}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Record Type">{!$Label.c.Aura_Case_Record_Type}</div>
+                            </th>
+                            <!--<th scope="col">
+                                <div class="slds-truncate" title="Parent Case Number">{!$Label.c.Aura_Parent_Case_Number}</div>
+                            </th>-->
+                            <th scope="col">
+                                <div class="slds-truncate" title="Date/Time Opened">{!$Label.c.Aura_DATE_TIME_OPENED}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Status">{!$Label.c.Aura_Status}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Priority">{!$Label.c.Aura_Priority}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Owner">{!$Label.c.Aura_Case_Owner}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Sub Type">{!$Label.c.Aura_Case_Sub_Type}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Subject">{!$Label.c.Aura_Case_Subject}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Other Subject">Other Subject</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                 <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Number">{!$Label.c.Aura_Case_Number}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Record Type">{!$Label.c.Aura_Case_Record_Type}</div>
+                            </th>
+                            <!--<th scope="col">
+                                <div class="slds-truncate" title="Parent Case Number">{!$Label.c.Aura_Parent_Case_Number}</div>
+                            </th>-->
+                            <th scope="col">
+                                <div class="slds-truncate" title="Date/Time Opened">Date/Time Opened</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Status">{!$Label.c.Aura_Status}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Priority">{!$Label.c.Aura_Priority}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Owner">{!$Label.c.Aura_Case_Owner}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Sub Type">{!$Label.c.Aura_Case_Sub_Type}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Case Subject">{!$Label.c.Aura_Case_Subject}</div>
+                            </th>
+                     		<th scope="col">
+                                <div class="slds-truncate" title="Other Subject">Other Subject</div>
+                            </th>
+                        </tr>
+        </tfoot>
+                    <tbody>
+                        <aura:iteration items="{!v.extobj}" var="level">
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate" title="{!level.CaseNumber}" ><a onclick="{!c.gotoCase}" id='{!level.Id}' >{!level.CaseNumber} </a></div>
+                                </th>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.RecordType.Name }">{!level.RecordType.Name }</div>
+                                </td>
+                                <!--<td>
+                                    <div class="slds-truncate" title="{!level.Parent.CaseNumber}"><a onclick="{!c.gotoCase}" id='{!level.Id}'>{!level.Parent.CaseNumber}</a></div>
+                                </td>-->
+                                <td>
+                                    <div class="slds-truncate" title="{!level.CreatedDate}">{!level.CreatedDate}</div>
+                                    <!--<lightning:formattedDateTime value="{!level.CreatedDate}" />-->
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.Status}">{!level.Status}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.Priority}">{!level.Priority}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.Owner.Name}">{!level.Owner.Name}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.Case_Sub_Type__c }">{!level.Case_Sub_Type__c }</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.Case_Subject__c}">{!level.Case_Subject__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="{!level.Subject}">{!level.Subject}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </article>  
+    </div>
+</aura:component>

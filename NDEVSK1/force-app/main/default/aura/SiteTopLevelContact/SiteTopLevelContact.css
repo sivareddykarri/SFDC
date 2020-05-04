@@ -1,0 +1,16 @@
+.THIS .black {
+    color:black;
+    font-size:15px;
+}
+
+.THIS .white {
+    color:white;
+ }
+
+.THIS .BreakWord {
+    white-space: normal;
+ }
+
+.THIS .Cfont {
+    color: #000000; font-family: Arial, sans-serif; font-weight: normal; font-size: 12px; 
+ }

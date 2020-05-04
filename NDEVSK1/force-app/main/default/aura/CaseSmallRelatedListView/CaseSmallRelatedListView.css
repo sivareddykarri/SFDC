@@ -1,0 +1,9 @@
+.THIS.border-style {
+    border-radius:4px;
+}
+.THIS.overflow-style{
+    overflow: scroll;
+}
+.THIS.TextColor-inherit{
+        color: inherit;
+}

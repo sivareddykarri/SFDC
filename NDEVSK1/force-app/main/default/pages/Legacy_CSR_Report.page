@@ -1,0 +1,33 @@
+<apex:page standardController="Account" extensions="Legacy_Ext_CSR_Report"  setup="false" showHeader="false" sidebar="false" standardStylesheets="true" >
+<style type="text/css">
+.odd { 
+background-color: White;}
+.even
+{background-color: Lightgray;}
+.headerStyle{color:black;font-weight: bold; background-color:#aaaaff;text-align:right;}
+</style>
+ 
+<apex:form style="background-color:#F3F3EC;background-repeat:repeat-x">
+
+<apex:pageBlock >
+<div style="overflow:auto;height:350px;">
+<apex:pageMessages ></apex:pageMessages>
+<apex:pageBlockTable value="{!PropertyValues}" var="v_CSR" id="pg_blk_CSR" rowClasses="even,odd" headerClass="headerStyle" cellspacing="1px" columnsWidth="40px,40px,40px,40px,40px,60px,40px,80px,80px,80px,80px,80px,80px"  cellpadding="2" rendered="{!NOT(ISNULL(PropertyValues))}" >
+<apex:column HEADErValue="Year" value="{!v_CSR.year}"  style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="Month" value="{!v_CSR.month}" style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="Revpar" value="{!v_CSR.strrevpar}"  style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;word-wrap: break-word;text-align:right;', 'color:black;word-wrap: break-word;text-align:right;')}"/>
+<apex:column headerValue="ADR   " value="{!v_CSR.stradr}"   style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="OCC" value="{!v_CSR.strocc}"  style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="Rms Revenue" value="{!v_CSR.strtotalRmRev}"   style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="Rms Rented" value="{!v_CSR.totalRented}"  style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold;text-align:right; background-color:#aaaacc', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="CRS Contrib -Rev" value="{!v_CSR.strcrConRev}"  style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;wordwrap: breakword;text-align:right;', 'color:black;wordwrap: breakword;text-align:right;')}"/>
+<apex:column headerValue="CRS Contrib -Rms" value="{!v_CSR.crConRm}"   style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;text-align:right;')}"/>
+<apex:column headerValue="CRS Contrib -ADR" value="{!v_CSR.strcrConADR}"   style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="CRS Contrib -%Rev" value="{!v_CSR.strcrConRev_per}"   style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="CRS Contrib -%Rms" value="{!v_CSR.strcrConRm_per}"  style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+<apex:column headerValue="CRS Denials -Rms" value="{!v_CSR.crTotalRooms}"   style="{!if(v_CSR.year=='Sum','color:black;font-weight: bold; background-color:#aaaacc;text-align:right;', 'color:black;text-align:right;')}"/>
+</apex:pageBlockTable>
+</div>
+</apex:pageBlock>
+</apex:form>
+</apex:page>
