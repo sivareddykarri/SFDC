@@ -1,3 +1,5 @@
+//BatchApexTest1 BAT = new BatchApexTest1();
+//Database.executeBatch(BAT);
 Global class BatchApexTest1 implements Database.Batchable<sObject>, Schedulable
 {
     //start - Initial the record or Data to perform the oprations will run only one time for the whole transaction.
